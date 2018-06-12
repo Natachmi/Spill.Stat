@@ -49,6 +49,8 @@ sum /* summarize*/
 sum s02a_02
 sum s02a_02 [w=factor]
 
+list
+
 des /*describe*/
 des s02a_02 
 
@@ -56,10 +58,30 @@ codebook
 help codebook
 
 sort folio
+note: ordena la base de datos
 
-br
+br /*browser*/
+note: Abre el visualizador de datos o lo coloca al frente de las otras ventanas de Stata
 
-edit
+edit /*editor*/
+note: Abre el editor de datos o lo coloca al frente de las otras ventanas de Stata 
+
+break
+note: Interrumpe lo que esté haciendo Stata. 
+
+clear all
+note: limpia todo
+
+*Operadores logicos
+note: < menor que
+note: <= menor o igual que
+note: == igual que
+note: > mayor que
+note: >= mayor o igual que
+note: != no es igual
+note: & la conjucion "y"
+note: | la conjuncion "o"
+note: "Varible de texto"
 
 *Ejercicio 2: Rename variables
 rename s02a_03 edad
