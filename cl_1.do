@@ -67,6 +67,9 @@ label var edad "Edad"
 
 
 *Ejercicio 5: Tab
+*Edad
+capture drop edad
+rename s02a_03 edad
 
 *Civil
 capture drop civil
@@ -82,11 +85,8 @@ label values civil civil
 *h tab
 
 tab mujer // Hombre o mujer
-
 tab mujer,  m 
 tab mujer, nofreq
-
-
 tab civil,m 
 
 * Queremos ver la cantidad de mujeres casadas
@@ -96,14 +96,15 @@ tab mujer civil,m col // del 100% de la población casada, 49.49% son mujeres
 tab mujer civil,m row // del 100% de mujeres, 26.91% están casadas.
 tab mujer civil,m col no freq
 
-* EJERCICIO
 * Qué porcentaje de las mujeres están embarazadas a la hora de hacer la encuesta 2017? 
 *Presentar resultados en una tabla bajo el nombre de muejres embarazadas
+
+/* EJERCICIO Resuelto
 tab s04b_11a
 * Qué porcentaje de mujeres estuvo o esta embarazada? 
 
 *Embarazos
-capture drop embarazos
+/*capture drop embarazos
 gen embarazos=s04b_11a
 
 label var  ""
@@ -112,6 +113,24 @@ label values
 
 tab mujer embarazos, m row matrow(a)
 tab mujer embarazos, m row matcol(b)
-tab mujer embarazos, m row matcell(aux)
+tab mujer embarazos, m row matcell(aux) */ */
 
 
+*Ejercicio 6: Keep Drop 
+*Para eliminar observaciones inecesarias en la base de datos
+tab edad embarazos
+keep if edad>=13 // eliminamos obervaciones innecesarias
+drop if edad>=13 
+*use $dta\EH2016_Persona.dta, clear
+
+*Ejercicio 7: comentarios
+note: cuatro formas de hacer comentarios
+* Asterisco
+// Doble barra
+/**/ barra asterisco
+
+*Ejercicio 8: REG  lineal
+* crear experiencia potencial
+reg ylab edad exper niv_ed civil depto
+
+*Ejercicio 9: Reg prob/logit
