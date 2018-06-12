@@ -67,39 +67,6 @@ rename s02a_03 edad
 label var edad "Edad"
 
 
-*Ejercicios 3: Creacion de variables dummy
-capture drop mujer
-gen mujer=.
-replace mujer=1 if s02a_02==2
-replace mujer=0 if s02a_02==1
-
-label define mujer 0 "Hombre"
-label define mujer 1 "Mujer", add
-label val mujer mujer
-label var mujer "Variable dummy"
-
-cap drop mujer1
-gen byte mujer1=(s02a_02==1)
-
-cap drop edad_5_10
-gen edad_5_10=edad if edad>=5 & edad<=10
-label var edad_5_10 "Grupo de edad de 5 a 10 años"
-
-cap drop edad_11_15
-gen byte edad_11_14=(edad>10 & edad<16)
-
-tab s02a_05, gen(parentesco)
-tab parentesco1
-
-*Ejercicio 4: Comando egen
-cap drop total_mujer
-gen total_mujer=sum(mujer)
-
-
-cap drop total_mujer1
-egen total_mujer1=sum(mujer)
-
-
 *Ejercicio 5: Tab
 =======
 
