@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 *Primera clase: Miércoles 13/jun/2018
 
 ***********
@@ -101,17 +100,6 @@ egen total_mujer1=sum(mujer)
 
 
 *Ejercicio 5: Tab
-=======
-
-*.. crear variables
-
-*Sexo
-capture drop sexo
-gen sexo=s02a_02
-
-label var sexo "Sexo"
-label def sexo 1 "Hombre"  2 "Mujer" , add
-label values sexo sexo 
 
 *Civil
 capture drop civil
@@ -122,28 +110,24 @@ label def civil 1 "Soltero"  2 "casado" 3 "Conviviente o concubino" 4 "Separado"
 label values civil civil
 
 
-
-* Tabulate 
-
+* Tabulate   
 /* El comando tabulate (tab) es muy utilizado a la hora de visualizar estadisticas descriptivas */
-
 *h tab
 
-tab s02a_02
-tab sexo // Hombre o mujer
+tab mujer // Hombre o mujer
 
-tab sexo,  m 
-tab sexo, nofreq
+tab mujer,  m 
+tab mujer, nofreq
 
 
 tab civil,m 
 
 * Queremos ver la cantidad de mujeres casadas
-tab sexo civil,m 
+tab mujer civil,m 
 * Queremos ver el porcnetaje de mujeres casadas
-tab sexo civil,m col // del 100% de la población casada, 49.49% son mujeres
-tab sexo civil,m row // del 100% de mujeres, 26.91% están casadas.
-tab sexo civil,m col no freq
+tab mujer civil,m col // del 100% de la población casada, 49.49% son mujeres
+tab mujer civil,m row // del 100% de mujeres, 26.91% están casadas.
+tab mujer civil,m col no freq
 
 * EJERCICIO
 * Qué porcentaje de las mujeres están embarazadas a la hora de hacer la encuesta 2017? 
@@ -159,11 +143,8 @@ label var  ""
 label def  1 ""  2 "" 3 "" , add
 label values 
 
-tab sexo embarazos, m row matrow(a)
-tab sexo embarazos, m row matcol(b)
-tab sexo embarazos, m row matcell(aux)
+tab mujer embarazos, m row matrow(a)
+tab mujer embarazos, m row matcol(b)
+tab mujer embarazos, m row matcell(aux)
 
 
-
-
->>>>>>> 5ea5e3f884d390d9d98bfd57334d6680d55ac52d
