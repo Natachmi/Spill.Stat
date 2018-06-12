@@ -83,9 +83,12 @@ note: & la conjucion "y"
 note: | la conjuncion "o"
 note: "Varible de texto"
 
-*Ejercicio 2: Rename variables
-rename s02a_03 edad
+*Ejercicio 2: Rename variables y descripcion de variables
 label var edad "Edad"
+rename s02a_03 edad
+note: describir media y desviacion estandar de la variable de edad, por grupos de edad
+
+sum edad if edad>=7
 
 
 *Ejercicio 5: Tab
