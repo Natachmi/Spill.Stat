@@ -19,7 +19,7 @@
 ********************************************************************************
 clear all 
 global do "C:\Users\Laura\Dropbox\dofiles"
-global dta "C:\Users\Laura\Dropbox\dtafiles"
+global dta "C:\Users\hp\Desktop\BASE_DE_DATOS\EH2016"
 global gph "C:\Users\Laura\Dropbox\gphfiles"
 global log "C:\Users\Laura\Dropbox\logfiles"
 global out "C:\Users\Laura\Dropbox\outfiles"
@@ -208,4 +208,55 @@ capture drop lnylab
 gen lnylab=log(ylab)
 
 reg lnylab exper e civil // ndepto //MCO
+bys marital: tab year female, m col
+
+**********
+*Gráficos*
+**********
+cap drop sexo_*
+tab sexo, gen(sexo_)
+
+tabstat dp_*, col(stat)
+
+graph bar sexo_*, percent bargap(10) outergap(10) /*
+*/ scheme(s1color) legend(label(1 "Hombre") label(2 "Mujer") /*
+*/ cols(2)) blabel(bar,format(%9.2f)) ylabel(0(20)100)
+graph export $gph\sexo.png, replace
+
+graph bar sexo_*, percent 
+graph hbar sexo_*, percent over(civil)
+graph hbar sexo_*, stack percent over(civil)
+graph hbar sexo_*, over(civil) over(depto) by(rural, cols(1) note(""))
+
+twoway dropline poblacion year, mlabel(poblacion) yaxis(1)  || connected share year, /*
+*/ msymbol(Sh) mlabel(share) yaxis(2) scheme(s2color8)
+
+twoway connected var1 var2
+twoway dot var1 var2
+twoway scatter var1 var2, msymbol(+) (lfit var1 var2)
+graph dot
+graph pie sexo, over(civil)
+*******
+*loops*
+*******
+*Loops //forvalues  o forv
+forv p=0(3)100{
+gen var_`p'=`p'
+}
+cap drop y
+gen y=0
+forv x=0(3)100{
+replace y=`x'
+}
+forv x=1/2{
+display `x' //muestra lo que esta sacando
+mean ylab if sexo==`x'
+}
+
+
+global p "sexo edad"
+foreach i of local p{
+rename `i' `i'_1
+}
+
 
