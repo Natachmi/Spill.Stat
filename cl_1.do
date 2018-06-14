@@ -172,17 +172,6 @@ preserve
 restore 
 */
 
-* Ejercicio table con otra base de datos
-*************************************************************************
-
-tab year female if marital==1
-bys year: tab female marital if edad==15
-
-* yalljb = ingreso laboral
-table year, c (mean yalljb count yalljb p90  yalljb p25 yalljb )
-
-logout, save ($tabl/control/tb_vc1) excel replace: table year, c (mean yalljb count yalljb p90  yalljb p25 yalljb )
-*************************************************************************
 
 *Ejercicio 7: Comentarios
 note: cuatro formas de hacer comentarios
@@ -197,11 +186,26 @@ tab year female
 table sexo, c (mean civil) 
 table sexo  if edad>12, c (mean civil) 
 
+* Ejercicio table con otra base de datos
+*************************************************************************
+
+tab year female if marital==1
+bys year: tab female marital if edad==15
+
+* yalljb = ingreso laboral
+table year, c (mean yalljb count yalljb p90  yalljb p25 yalljb )
+
+logout, save ($tabl/control/tb_vc1) excel replace: table year, c (mean yalljb count yalljb p90  yalljb p25 yalljb )
+*************************************************************************
 
 *Ejercicio 9: REG  lineal
-* crear experiencia potencial
-reg ylab edad exper niv_ed civil depto
+*crear experiencia potencial
 
-*Ejercicio 10: Reg prob/logit
-prob ylab edad exper niv_ed civil depto
+capture drop exper
+gen exper=edad-6-e
+
+capture drop lnylab
+gen lnylab=log(ylab)
+
+reg lnylab exper e civil // ndepto //MCO
 
