@@ -92,6 +92,9 @@ sum edad if edad>=7
 
 
 *Ejercicio 5: Tabulate
+*sexo
+capture drop sexo
+rename s02a_02 sexo
 *Edad
 capture drop edad
 rename s02a_03 edad
@@ -119,45 +122,78 @@ tab mujer civil,m col no freq
 * Qué porcentaje de las mujeres están embarazadas a la hora de hacer la encuesta 2017? 
 *Presentar resultados en una tabla bajo el nombre de muejres embarazadas
 
-/* EJERCICIO Resuelto
-tab s04b_11a
-* Qué porcentaje de mujeres estuvo o esta embarazada? 
+capture drop embarazo
+gen embarazo=s04b_11a 
 
-*Embarazos
-/*capture drop embarazos
-gen embarazos=s04b_11a
+tab sexo embarazo [w=factor] ,m row
 
-label var  ""
-label def  1 ""  2 "" 3 "" , add
-label values 
-
-tab mujer embarazos, m row matrow(a)
-tab mujer embarazos, m row matcol(b)
-tab mujer embarazos, m row matcell(aux) */ */
-
-
-*Ejercicio 6: Keep Drop 
+*Ejercicio 6: Keep Drop preserve restore
 *Para eliminar observaciones inecesarias en la base de datos
 tab edad embarazos
-keep if edad>=13 // eliminamos obervaciones innecesarias
-drop if edad>=13 
 
-use $dta\EH2016_Persona.dta, clear
+keep if edad<=18 // eliminamos obervaciones innecesarias
+sort edad
+drop if edad>=18 
+*************************************************************************
+clear all
+global out= "C:\Users\NATALY\Dropbox\ARU\Investigación\TATO\Armonizacion\dta\out"
+global in= "C:\Users\NATALY\Dropbox\ARU\Investigación\TATO\Armonizacion\dta\in"
+
+use $in\eh2016_personas.dta, clear
+
+*sexo
+capture drop sexo
+rename s02a_02 sexo
+*Edad
+capture drop edad
+rename s02a_03 edad
+
+*Civil
+capture drop civil
+gen civil=s02a_10
+
+*embarazo
+capture drop embarazo
+gen embarazo=s04b_11a 
+
+label var civil "Estado civil"
+label def civil 1 "Soltero"  2 "casado" 3 "Conviviente o concubino" 4 "Separado" 5 "Divorciado" 6 "Viudo", add
+label values civil civil
+/*
+preserve 
+ drop if edad>18 
+ save $out/bd2aux.dta, replace // ni;os ni;as adolescentes
+ *save "C:\Users\NATALY\Dropbox\ARU\Investigación\TATO\Armonizacion\dta\out\baseejemplo.dta, replace
+ restore 
 
 preserve 
-drop if edad>=13 
- tempfile table2
- save `table2', replace
- export excel using "C:\Users\NATALY\Dropbox\ARU\Investigación\TATO\Mercado_Laboral\Modulo_mercado_laboral\tabl\tab1an234.xlsx", replace firstrow(var) 
+ drop if edad>12 
+ save $out/bd2aux.dta, replace // embarazo
 restore 
+*/
 
-*Ejercicio 7: comentarios
+* Ejercicio table con otra base de datos
+*************************************************************************
+
+tab year female if marital==1
+bys year: tab female marital if edad==15
+
+* yalljb = ingreso laboral
+table year, c (mean yalljb count yalljb p90  yalljb p25 yalljb )
+
+logout, save ($tabl/control/tb_vc1) excel replace: table year, c (mean yalljb count yalljb p90  yalljb p25 yalljb )
+*************************************************************************
+
+*Ejercicio 7: Comentarios
 note: cuatro formas de hacer comentarios
 * Asterisco
 // Doble barra
 /**/ //barra asterisco
+/// 
 
-*Ejercicio 8: Table 
+*Ejercicio 8: Table
+tab year female
+ 
 table sexo, c (mean civil) 
 table sexo  if edad>12, c (mean civil) 
 
