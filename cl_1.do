@@ -66,7 +66,7 @@ rename s02a_03 edad
 label var edad "Edad"
 
 
-*Ejercicio 5: Tab
+*Ejercicio 5: Tabulate
 *Edad
 capture drop edad
 rename s02a_03 edad
@@ -78,11 +78,6 @@ gen civil=s02a_10
 label var civil "Estado civil"
 label def civil 1 "Soltero"  2 "casado" 3 "Conviviente o concubino" 4 "Separado" 5 "Divorciado" 6 "Viudo", add
 label values civil civil
-
-
-* Tabulate   
-/* El comando tabulate (tab) es muy utilizado a la hora de visualizar estadisticas descriptivas */
-*h tab
 
 tab mujer // Hombre o mujer
 tab mujer,  m 
@@ -121,16 +116,31 @@ tab mujer embarazos, m row matcell(aux) */ */
 tab edad embarazos
 keep if edad>=13 // eliminamos obervaciones innecesarias
 drop if edad>=13 
-*use $dta\EH2016_Persona.dta, clear
+
+use $dta\EH2016_Persona.dta, clear
+
+preserve 
+drop if edad>=13 
+ tempfile table2
+ save `table2', replace
+ export excel using "C:\Users\NATALY\Dropbox\ARU\Investigación\TATO\Mercado_Laboral\Modulo_mercado_laboral\tabl\tab1an234.xlsx", replace firstrow(var) 
+restore 
 
 *Ejercicio 7: comentarios
 note: cuatro formas de hacer comentarios
 * Asterisco
 // Doble barra
-/**/ barra asterisco
+/**/ //barra asterisco
 
-*Ejercicio 8: REG  lineal
+*Ejercicio 8: Table 
+table sexo, c (mean civil) 
+table sexo  if edad>12, c (mean civil) 
+
+
+*Ejercicio 9: REG  lineal
 * crear experiencia potencial
 reg ylab edad exper niv_ed civil depto
 
-*Ejercicio 9: Reg prob/logit
+*Ejercicio 10: Reg prob/logit
+prob ylab edad exper niv_ed civil depto
+
