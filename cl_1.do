@@ -84,12 +84,10 @@ note: | la conjuncion "o"
 note: "Varible de texto"
 
 *Ejercicio 2: Rename variables y descripcion de variables
-label var edad "Edad"
-rename s02a_03 edad
-note: describir media y desviacion estandar de la variable de edad, por grupos de edad
-
+*label var edad "Edad"
+*rename s02a_03 edad
+*note: describir media y desviacion estandar de la variable de edad, por grupos de eda
 sum edad if edad>=7
-
 
 *Ejercicio 5: Tabulate
 *sexo
@@ -252,7 +250,6 @@ forv x=1/2{
 display `x' //muestra lo que esta sacando
 mean ylab if sexo==`x'
 }
-
 
 global p "sexo edad"
 foreach i of local p{
